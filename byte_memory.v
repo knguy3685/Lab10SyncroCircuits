@@ -24,56 +24,13 @@ module byte_memory(
 
     input [7:0] data,
     input store,
-    output [7:0] memory
+    output reg [7:0] memory
     );
     
-    DLatch bite1 (
-    .D(data[0]),
-    .E(store),
-    .Q(memory[0])
-    );
-    
-    DLatch bite2 (
-    .D(data[1]),
-    .E(store),
-    .Q(memory[1])
-    );
-    
-    DLatch bite3 (
-    .D(data[2]),
-    .E(store),
-    .Q(memory[2])
-    );
-    
-    DLatch bite4 (
-    .D(data[3]),
-    .E(store),
-    .Q(memory[3])
-    );
-    
-    DLatch bite5 (
-    .D(data[4]),
-    .E(store),
-    .Q(memory[4])
-    );
-    
-    DLatch bite6 (
-    .D(data[5]),
-    .E(store),
-    .Q(memory[5])
-    );
-    
-    DLatch bite7 (
-    .D(data[6]),
-    .E(store),
-    .Q(memory[6])
-    );
-    
-    DLatch bite8 (
-    .D(data[7]),
-    .E(store),
-    .Q(memory[7])
-    );
+        always @(*) begin
+            if (store)
+                memory <= data;
+            end
     
     
     
