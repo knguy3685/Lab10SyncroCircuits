@@ -28,64 +28,63 @@ module memory_system(
     output [7:0] memory
     
     );
-    
-    wire[7:0] bundle[3:0];
-    
-    wire[7:0] bundle2[3:0];
-    
-    Demux demux(
-    .data(data),
-    .sel(addr),
-    .A(bundle[0]),
-    .B(bundle[1]),
-    .C(bundle[2]),
-    .D(bundle[3])
-    ); 
-    
-    wire [3:0] btnCwire;
 
-    DemuxOne deOne(
-    .enable(btnC),
-    .sel(addr),
-    .A(btnCwire[0]),
-    .B(btnCwire[1]),
-    .C(btnCwire[2]),
-    .D(btnCwire[3])
+    wire [3:0] btnWire;
+    wire [7:0] demuxWire[3:0];
+    wire [7:0] storedData[3:0];
+
+    DemuxOne btnDemux(
+        .enable(store),
+        .sel(addr),
+        .A(btnWire[0]),
+        .B(btnWire[1]),
+        .C(btnWire[2]),
+        .D(btnWire[3])
     );
-    
-    
+
+    Demux demuxInput(
+        .data(data),
+        .sel(addr),
+        .A(demuxWire[0]),
+        .B(demuxWire[1]),
+        .C(demuxWire[2]),
+        .D(demuxWire[3])
+
+    );
+
     byte_memory byte1(
-    .data(bundle[0]),
-    .store(btnCwire[0]),
-    .memory(bundle2[0])
+        .data(demuxWire[0]),
+        .store(btnWire[0]),
+        .memory(storedData[0])
     );
-    
+
     byte_memory byte2(
-    .data(bundle[1]),
-    .store(btnCwire[1]),
-    .memory(bundle2[1])
+        .data(demuxWire[1]),
+        .store(btnWire[1]),
+        .memory(storedData[1])
     );
-    
+
     byte_memory byte3(
-    .data(bundle[2]),
-    .store(btnCwire[2]),
-    .memory(bundle2[2])
+        .data(demuxWire[2]),
+        .store(btnWire[2]),
+        .memory(storedData[2])
     );
-    
+
     byte_memory byte4(
-    .data(bundle[3]),
-    .store(btnCwire[3]),
-    .memory(bundle2[3])
+        .data(demuxWire[3]),
+        .store(btnWire[3]),
+        .memory(storedData[3])
     );
-    
-    Mux Mux(
-    .A(bundle2[0]),
-    .B(bundle2[1]),
-    .C(bundle2[2]),
-    .D(bundle2[3]),
-    .Sel(addr),
-    .enable(store),
-    .Y(memory)
+
+    Mux muxOutput(
+        .A(storedData[0]),
+        .B(storedData[1]),
+        .C(storedData[2]),
+        .D(storedData[3]),
+        .Sel(addr),
+        .enable(1'b1),
+        .Y(memory)
+
     );
     
     

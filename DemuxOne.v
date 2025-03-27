@@ -35,6 +35,7 @@ module DemuxOne(
             2'b01: {D, C, B, A} <= {1'b0, 1'b0, enable, 1'b0};
             2'b10: {D, C, B, A} <= {1'b0, enable, 1'b0, 1'b0};
             2'b11: {D, C, B, A} <= {enable, 1'b0, 1'b0, 1'b0};
+            default: ;
         endcase
     end
     

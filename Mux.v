@@ -21,7 +21,7 @@
 
 
 module Mux(
-        input [7:0] A,[7:0] B,[7:0] C,[7:0] D,
+        input [7:0] A, B, C, D,
         input [1:0] Sel,
         input enable,
         output [7:0] Y
